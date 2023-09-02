@@ -1,13 +1,12 @@
-CREATE EXTERNAL TABLE IF NOT EXISTS my_cloudwatch_logs (
-  timestamp bigint,
-  log_group string,
-  log_stream string,
-  message string
+CREATE EXTERNAL TABLE cloudwatch_logs (
+    `timestamp` timestamp,
+    `message` string
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.RegexSerDe'
 WITH SERDEPROPERTIES (
-  'separatorChar' = ',',
-  'quoteChar' = '"',
-  'escapeChar' = '\\'
+    'serialization.format' = '1',
+    'input.regex' = '^(\\S+)\\s+(.*)$'
 )
-LOCATION 's3://my-s3-bucket/my-export-folder/';
+LOCATION 's3://s3bucketname/';
+
+
