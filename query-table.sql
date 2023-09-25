@@ -1,1 +1,4 @@
-SELECT * FROM "default"."cloudwatch_logs" limit 10;
+SELECT timestamp, log_group, log_stream, message
+FROM my_cloudwatch_logs
+WHERE log_group = ‘access_log’
+LIMIT 10
